@@ -6,7 +6,9 @@ A simple app that takes in some value of money and baseline scenario of investin
 This is also my own way of expressing retaliation towards our currently broken capitalism system of life.
 
 ## What this shows
-A baseline understanding of a basic GUI program.
+Python OOP
+Python GUI software program
+Tax calculation
 
 
-# The program in action
+# Running the program:
