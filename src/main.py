@@ -1,8 +1,15 @@
 import matplotlib.pyplot as plt
+import tkinter as tk
+import customtkinter as ctk
+import os
 import income
 
 
 def arr_dif_bigger(arr):
+    '''
+    Param: arr
+    Return: Bool whether rate increases from 0-1 to 1-2
+    '''
     arr_dif1 = arr[1] - arr[0]
     arr_dif2 = arr[2] - arr[1]
     if arr_dif2 > arr_dif1:
@@ -12,10 +19,10 @@ def arr_dif_bigger(arr):
 
 
 def years_to_retire(me:income.Income):
-    """
-    years_to_retire:
-    returns: years to retire, money plot
-    """
+    '''
+    Param: income.Income
+    Return: years to retire, money plot
+    '''
     year_list = []
     capital_arr = []
     income_arr = []
@@ -59,23 +66,61 @@ def years_to_retire(me:income.Income):
     return -1
 
 
-if __name__=="__main__":
-    tax1_bracket_rate = [0.15, 0.205, 0.26, 0.29, 0.33, 0]
-    tax1_bracket_range = [0, 50197, 100392, 155625, 211708, 0]
-    tax1 = income.Tax(tax1_bracket_rate, tax1_bracket_range)
-    
-    my_tax_rate = 0.17
+'''
+Custom tkinter window
+'''
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
 
-    my_salary = 79435
-    my_salary_growth = 1.03
-    my_save_rate = 0.2
-    my_capital = 15000
-    my_misc_gain = 16000
-    my_capital_growth = 1.107
-    my_living_cost = 33320
-    my_inflation = 1.02
-    me = income.Income(my_salary, my_salary_growth, my_save_rate, tax1, 
-                        my_capital, my_misc_gain, my_capital_growth, 
-                        my_living_cost, my_inflation)
-    year = years_to_retire(me)
+class App(ctk.CTk):
+    '''
+    Main window class
+    '''
+    def __init__(self, *args, fg_color="default_theme", **kwargs):
+        super().__init__(*args, fg_color=fg_color, **kwargs)
+
+        self.geometry("800x700")
+        self.title("When can I retire?")
+        self.minsize(500, 400)
+
+        # create x grid system
+        self.grid_rowconfigure((0,1,2,3), weight=1)
+        self.grid_columnconfigure((0,1,2,3,4,5), weight=1)
+
+        # todo finish layouts of the gui
+        # all the boxes
+        self.salary_label = ctk.CTkLabel(master=self, text='Salary')
+        self.salary_label.grid(row=1, column=0)
+        self.salary_box = ctk.CTkTextbox(master=self)
+        self.salary_box.grid(row=1, column=1)
+        self.button3 = ctk.CTkButton(master=self, text='3')
+        self.button3.grid(row=2, column=2)
+        self.button4 = ctk.CTkButton(master=self, text='4')
+        self.button4.grid(row=3, column=3)
+
+
+if __name__=="__main__":
+    '''
+    Driver function
+    '''
+    app = App()
+    app.mainloop()
+#     tax1_bracket_rate = [0.15, 0.205, 0.26, 0.29, 0.33, 0]
+#     tax1_bracket_range = [0, 50197, 100392, 155625, 211708, 0]
+#     tax1 = income.Tax(tax1_bracket_rate, tax1_bracket_range)
+    
+#     my_tax_rate = 0.17
+
+#     my_salary = 79435
+#     my_salary_growth = 1.03
+#     my_save_rate = 0.2
+#     my_capital = 15000
+#     my_misc_gain = 16000
+#     my_capital_growth = 1.107
+#     my_living_cost = 33320
+#     my_inflation = 1.02
+#     me = income.Income(my_salary, my_salary_growth, my_save_rate, tax1, 
+#                         my_capital, my_misc_gain, my_capital_growth, 
+#                         my_living_cost, my_inflation)
+#     year = years_to_retire(me)
     
