@@ -7,7 +7,9 @@ This is also my own way of expressing retaliation towards our currently broken c
 
 ## What this shows
 Python OOP
+
 Python GUI software program
+
 Tax calculation
 
 
