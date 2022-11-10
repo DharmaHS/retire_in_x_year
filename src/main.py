@@ -1,8 +1,10 @@
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from PIL import ImageTk, Image
 
 import os
+import sys
 
 import income
 
@@ -78,7 +80,7 @@ class App(ctk.CTk):
         self.var = ctk.IntVar()
 
         self.geometry("1200x1000")
-        self.title("When can I retire? (using S&P 500)")
+        self.title("When can I retire? (use S&P 500)")
         self.minsize(1200, 1000)
 
         # create scalable grid system
@@ -175,77 +177,46 @@ class App(ctk.CTk):
         Function: Does input check and get the retire year,
         opens a window to the result
         '''
-        # ! this is the actual input part
-        '''
-        # my_salary = self.salary_box.get("0.0", "end")
-        # my_salary = self.check_input_valid(my_salary)
-        # my_salary_growth = self.Salary_growth_box.get("0.0", "end")
-        # my_salary_growth = self.check_input_valid(my_salary_growth)/100 + 1
-        # my_save_rate = self.save_box.get("0.0", "end")
-        # my_save_rate = self.check_input_valid(my_save_rate)/100
-        # my_capital = self.initial_capital_box.get("0.0", "end")
-        # my_capital = self.check_input_valid(my_capital)
-        # my_misc_gain = self.misc_gain_box.get("0.0", "end")
-        # my_misc_gain = self.check_input_valid(my_misc_gain)
-        # my_capital_growth = self.capital_growth_box.get("0.0", "end")
-        # my_capital_growth = self.check_input_valid(my_capital_growth)/100 + 1
-        # my_living_cost = self.living_cost_box.get("0.0", "end")
-        # my_living_cost = self.check_input_valid(my_living_cost)
-        # my_inflation = self.inflation_box.get("0.0", "end")
-        # my_inflation = self.check_input_valid(my_inflation)/100 + 1
 
-        # my_tax_rate = [self.tax_rate_1.get("0.0", "end"), self.tax_rate_2.get("0.0", "end"), self.tax_rate_3.get("0.0", "end"), self.tax_rate_4.get("0.0", "end"), self.tax_rate_5.get("0.0", "end")]
-        # my_tax_range = [0, self.tax_range_2.get("0.0", "end"), self.tax_range_3.get("0.0", "end"), self.tax_range_4.get("0.0", "end"), self.tax_range_5.get("0.0", "end")]
-        # for x in my_tax_rate:
-        #     my_tax_rate[my_tax_rate.index(x)] = self.check_input_valid(x)/100
-        # for x in my_tax_range:
-        #     my_tax_range[my_tax_range.index(x)] = self.check_input_valid(x)
-        # my_tax_rate.append(0)
-        # my_tax_range.append(0)
-
-        # my_tax = income.Tax(my_tax_rate, my_tax_range)
-        # me = income.Income(my_salary, my_salary_growth, my_save_rate, my_tax, 
-        #                     my_capital, my_misc_gain, my_capital_growth, 
-        #                     my_living_cost, my_inflation)
-        # year = years_to_retire(me)
-        '''
-        my_salary = "79435"
+        # get input for salary and living cost info
+        my_salary = self.salary_box.get("0.0", "end")
         my_salary = self.check_input_valid(my_salary)
-        my_salary_growth = "3"
+        my_salary_growth = self.Salary_growth_box.get("0.0", "end")
         my_salary_growth = self.check_input_valid(my_salary_growth)/100 + 1
-        my_save_rate = "20"
+        my_save_rate = self.save_box.get("0.0", "end")
         my_save_rate = self.check_input_valid(my_save_rate)/100
-        my_capital = "15000"
+        my_capital = self.initial_capital_box.get("0.0", "end")
         my_capital = self.check_input_valid(my_capital)
-        my_misc_gain = "16000"
+        my_misc_gain = self.misc_gain_box.get("0.0", "end")
         my_misc_gain = self.check_input_valid(my_misc_gain)
-        my_capital_growth = "10.8"
+        my_capital_growth = self.capital_growth_box.get("0.0", "end")
         my_capital_growth = self.check_input_valid(my_capital_growth)/100 + 1
-        my_living_cost = "33320"
+        my_living_cost = self.living_cost_box.get("0.0", "end")
         my_living_cost = self.check_input_valid(my_living_cost)
-        my_inflation = "2"
+        my_inflation = self.inflation_box.get("0.0", "end")
         my_inflation = self.check_input_valid(my_inflation)/100 + 1
 
-        my_tax_rate = ['15', '20.5', '26', '29', '33']
-        my_tax_range = ['0', '50197', '100392', '155625', '211708']
+        my_tax_rate = [self.tax_rate_1.get("0.0", "end"), self.tax_rate_2.get("0.0", "end"), self.tax_rate_3.get("0.0", "end"), self.tax_rate_4.get("0.0", "end"), self.tax_rate_5.get("0.0", "end")]
+        my_tax_range = [0, self.tax_range_2.get("0.0", "end"), self.tax_range_3.get("0.0", "end"), self.tax_range_4.get("0.0", "end"), self.tax_range_5.get("0.0", "end")]
         for x in my_tax_rate:
             my_tax_rate[my_tax_rate.index(x)] = self.check_input_valid(x)/100
         for x in my_tax_range:
-            my_tax_range[my_tax_range.index(str(x))] = self.check_input_valid(x)
+            my_tax_range[my_tax_range.index(x)] = self.check_input_valid(x)
         my_tax_rate.append(0)
         my_tax_range.append(0)
-        my_tax = income.Tax(my_tax_rate, my_tax_range)
 
+        my_tax = income.Tax(my_tax_rate, my_tax_range)
         me = income.Income(my_salary, my_salary_growth, my_save_rate, my_tax, 
                             my_capital, my_misc_gain, my_capital_growth, 
                             my_living_cost, my_inflation)
+
         can_retire, figure, num_of_year = years_to_retire(me)
 
         top = ctk.CTkToplevel()
         top.pack_propagate(False)
         top.geometry("1000x800")
         top.title("Result")
-        top.grid_rowconfigure((0,1,2,3), weight=1)
+        top.grid_rowconfigure((0,1,2), weight=1)
         top.grid_columnconfigure((0), weight=1)
         result_str = "You can retire in " + str(num_of_year) + " years."   
         ctk.CTkLabel(master=top, text=result_str, text_font=["helvetica", 14]).grid(row=0, column=0)
@@ -268,29 +239,20 @@ you budget stuff correctly, you're all set!
         else:
             shit_str =  '''i: imaginary, not real.
 As in you don't get to retire in safety with the
-salary you have and the life style you want,
-not in this economy at least. Too bad.
+salary you have and the life style you want.
+Not in this economy at least.
+
+Too bad, try changing something.
                         '''
-            shit_text_box = ctk.CTkTextbox(master=top, height=130, width=400, text_font=["helvetica", 13])
+            shit_text_box = ctk.CTkTextbox(master=top, height=130, width=360, text_font=["helvetica", 13])
             shit_text_box.grid(row=1, column=0)
             shit_text_box.insert('end', shit_str)
             # ! look at the last ! comment
             # shit_text_box.config(state='disabled')
-        
+        top.protocol("WM_DELETE_WINDOW", top.destroy)
+
         top.mainloop()
-    
-    def callback(self):
-        self.var.set(self.var.get()+1)
-        self.after_id = self.after(500, self.callback)
         
-            
-            
-
-
-def check_input_valid(val):
-        if val == "\n":
-            val = "0"
-        return float(val)
 
 if __name__=="__main__":
     '''
@@ -300,67 +262,3 @@ if __name__=="__main__":
     ctk.set_default_color_theme("blue")
     app = App()
     app.mainloop()
-
-    # my_salary = "79435"
-    # my_salary = check_input_valid(my_salary)
-    # print(my_salary)
-    # my_salary_growth = "3"
-    # my_salary_growth = check_input_valid(my_salary_growth)
-    # my_salary_growth /= 100.0
-    # my_salary_growth += 1
-    # print(my_salary_growth)
-    # my_save_rate = "20"
-    # my_save_rate = check_input_valid(my_save_rate)/100
-    # print(my_save_rate)
-    # my_capital = "15000"
-    # my_capital = check_input_valid(my_capital)
-    # print(my_capital)
-    # my_misc_gain = "16000"
-    # my_misc_gain = check_input_valid(my_misc_gain)
-    # print(my_misc_gain)
-    # my_capital_growth = "10.8"
-    # my_capital_growth = check_input_valid(my_capital_growth)/100 + 1
-    # print(my_capital_growth)
-    # my_living_cost = "33320"
-    # my_living_cost = check_input_valid(my_living_cost)
-    # print(my_living_cost)
-    # my_inflation = "2"
-    # my_inflation = check_input_valid(my_inflation)/100 + 1
-    # print(my_inflation)
-
-    # my_tax_rate = ['15', '20.5', '26', '29', '33']
-    # my_tax_range = ['0', '50197', '100392', '155625', '211708']
-    # for x in my_tax_rate:
-    #     my_tax_rate[my_tax_rate.index(x)] = check_input_valid(x)/100
-    # for x in my_tax_range:
-    #     my_tax_range[my_tax_range.index(str(x))] = check_input_valid(x)
-    # my_tax_rate.append(0)
-    # my_tax_range.append(0)
-    # print(my_tax_rate)
-    # print(my_tax_range)
-    # my_tax = income.Tax(my_tax_rate, my_tax_range)
-
-    # me = income.Income(my_salary, my_salary_growth, my_save_rate, my_tax, 
-    #                     my_capital, my_misc_gain, my_capital_growth, 
-    #                     my_living_cost, my_inflation)
-    # year = years_to_retire(me)
-
-#     tax1_bracket_rate = [0.15, 0.205, 0.26, 0.29, 0.33, 0]
-#     tax1_bracket_range = [0, 50197, 100392, 155625, 211708, 0]
-#     tax1 = income.Tax(tax1_bracket_rate, tax1_bracket_range)
-    
-#     my_tax_rate = 0.17
-
-#     my_salary = 79435
-#     my_salary_growth = 1.03
-#     my_save_rate = 0.2
-#     my_capital = 15000
-#     my_misc_gain = 16000
-#     my_capital_growth = 1.107
-#     my_living_cost = 33320
-#     my_inflation = 1.02
-#     me = income.Income(my_salary, my_salary_growth, my_save_rate, tax1, 
-#                         my_capital, my_misc_gain, my_capital_growth, 
-#                         my_living_cost, my_inflation)
-#     year = years_to_retire(me)
-    
