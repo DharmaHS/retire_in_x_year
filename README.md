@@ -15,10 +15,10 @@ Tax calculation
 
 # Running the program:
 - Fill in numbers
--[run](https://github.com/DharmaHS/retire_in_x_year/blob/main/documentation_image/ss_main_window.PNG)
+![run](https://github.com/DharmaHS/retire_in_x_year/blob/main/documentation_image/ss_main_window.PNG)
 
 - If you're good
--[can retire](https://github.com/DharmaHS/retire_in_x_year/blob/main/documentation_image/ss_result_window_can.PNG)
+![can retire](https://github.com/DharmaHS/retire_in_x_year/blob/main/documentation_image/ss_result_window_can.PNG)
 
 - If you're not good
--[cannot](https://github.com/DharmaHS/retire_in_x_year/blob/main/documentation_image/ss_result_window_cannot.PNG)
+![cannot](https://github.com/DharmaHS/retire_in_x_year/blob/main/documentation_image/ss_result_window_cannot.PNG)
