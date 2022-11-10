@@ -52,26 +52,17 @@ def years_to_retire(me:income.Income):
                 income_arr.append(0)
                 living_cost_arr.append(living_cost_arr[i+j-2] * me.inflation)
                 extra_money_arr.append(0)
-            
-            # todo: make sure 0s show up on y axis
+
             fig, ax = plt.subplots()
+            fig.subplots_adjust(wspace=0.6, hspace=0.6, left=0.15, bottom=0.1, right=0.85, top=0.9)
             ax.plot(year_list, capital_arr, label="money on investment")
             ax.plot(year_list, living_cost_arr, label="annual living cost")
             ax.plot(year_list, income_arr, label="annual work income post tax")
             ax.plot(year_list, extra_money_arr, label="annual extra money (saved to bank)")
+            ax.ticklabel_format(style = "plain")
             ax.set_xlabel("Years")
             ax.set_ylabel("Money")
-            ax.set_title("THe money curve")
-            # plt.plot(year_list, capital_arr, label="money on investment")
-            # plt.plot(year_list, living_cost_arr, label="annual living cost")
-            # plt.plot(year_list, income_arr, label="annual work income post tax")
-            # plt.plot(year_list, extra_money_arr, label="annual extra money (saved to bank)")
-            # plt.xlabel("Years")
-            # plt.ylabel("Money")
-            # response_title = "You can retire after "+ str(i+1) +" year of working"
-            # plt.title(response_title)
-            # plt.legend()
-            # plt.show()
+            ax.set_title("The money curve")
             return True, fig, i
 
     return False, None, "i"
@@ -252,26 +243,39 @@ class App(ctk.CTk):
 
         top = ctk.CTkToplevel()
         top.pack_propagate(False)
-        top.geometry("750x800")
+        top.geometry("1000x800")
         top.title("Result")
-        top.grid_rowconfigure((0,1,2), weight=1)
+        top.grid_rowconfigure((0,1,2,3), weight=1)
         top.grid_columnconfigure((0), weight=1)
         result_str = "You can retire in " + str(num_of_year) + " years."   
+        ctk.CTkLabel(master=top, text=result_str, text_font=["helvetica", 14]).grid(row=0, column=0)
 
         if can_retire:
-            ctk.CTkLabel(master=top, text=result_str, text_font=["helvetica", 14]).grid(row=0, column=0)
             chart = FigureCanvasTkAgg(figure, top)
             chart.get_tk_widget().grid(row=2, column=0)
+            
+            additional_msg =    '''Note:
+This plan works assuming a world war doesn't start
+or the next economic crisis happen, and as long as
+you budget stuff correctly, you're all set!
+                                '''
+            msg_text_box = ctk.CTkTextbox(master=top, height=130, width=400, text_font=["helvetica", 13])
+            msg_text_box.grid(row=1, column=0)
+            msg_text_box.insert('end', additional_msg)
+            # ! ctk still developing parts of this
+            # msg_text_box.config(state='disabled')
 
         else:
-            shit_str=   '''
-                        i: imaginary, not real, as in you don't get to retire in 
-                        safety with the salary you have and the life style you want,
-                        not in this economy at least. Too bad.
+            shit_str =  '''i: imaginary, not real.
+As in you don't get to retire in safety with the
+salary you have and the life style you want,
+not in this economy at least. Too bad.
                         '''
-            shit_text_box = ctk.CTkTextbox(master=top)
+            shit_text_box = ctk.CTkTextbox(master=top, height=130, width=400, text_font=["helvetica", 13])
+            shit_text_box.grid(row=1, column=0)
             shit_text_box.insert('end', shit_str)
-            shit_text_box.config(state='disabled')
+            # ! look at the last ! comment
+            # shit_text_box.config(state='disabled')
         
         top.mainloop()
     
