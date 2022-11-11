@@ -12,6 +12,9 @@ Python GUI software program
 
 Tax calculation
 
+# Important note!
+This project uses a currently on-development repo [Custom Tkinter](https://github.com/TomSchimansky/CustomTkinter) as one of its dependencies, as I am writing this there are still some parts of the library that's not completely functional from the official release such as CTkTextbox, check the current development branch for the most current build
+
 
 # Running the program:
 - Fill in numbers
