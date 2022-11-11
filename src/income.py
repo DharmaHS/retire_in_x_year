@@ -4,7 +4,7 @@ class Tax:
         self.rate = _tax_rate_list
         self.range = _tax_range_list
 
-    def get_income_post_tax(self, _income):
+    def get_income_post_tax(self, income):
         '''
         Param: income
         Return: income post tax
@@ -12,13 +12,13 @@ class Tax:
         income_post_tax = 0
         for i in range(1, 10):
             if self.rate[i] == 0:
-                income_post_tax += (_income - self.range[i-1]) * (1-self.rate[i-1])
+                income_post_tax += (income - self.range[i-1]) * (1-self.rate[i-1])
                 break
-            if _income >= self.range[i]:
+            if income >= self.range[i]:
                 income_post_tax += (self.range[i] - self.range[i-1] ) * (1-self.rate[i-1])
                 pass
-            elif _income < self.range[i]:
-                income_post_tax += (_income - self.range[i-1]) * (1-self.rate[i-1])
+            elif income < self.range[i]:
+                income_post_tax += (income - self.range[i-1]) * (1-self.rate[i-1])
                 break
             
         return income_post_tax
@@ -36,18 +36,18 @@ class Income:
     living_cost_arr = []
     capital_arr = []
 
-    def __init__(self, _salary, _salary_growth_rate, _save_rate, _tax_rate:Tax,
-                    _initial_capital, _misc_gain, _capital_gain,
-                    _living_cost, _inflation):
-        self.annual_salary = _salary
-        self.salary_growth_rate = _salary_growth_rate
-        self.save_rate = _save_rate
-        self.initial_capital = _initial_capital
-        self.misc_gain = _misc_gain
-        self.capital_growth = _capital_gain
-        self.living_cost = _living_cost
-        self.inflation = _inflation
-        self.tax_rate = _tax_rate
+    def __init__(self, salary, salary_growth_rate, save_rate, tax_rate:Tax,
+                    initial_capital, misc_gain, capital_gain,
+                    living_cost, inflation):
+        self.annual_salary = salary
+        self.salary_growth_rate = salary_growth_rate
+        self.save_rate = save_rate
+        self.initial_capital = initial_capital
+        self.misc_gain = misc_gain
+        self.capital_growth = capital_gain
+        self.living_cost = living_cost
+        self.inflation = inflation
+        self.tax_rate = tax_rate
 
         current_capital = self.initial_capital
         for i in range(1, 61):
